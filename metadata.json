@@ -1,0 +1,6 @@
+{
+  "name": "Birthday Card for Navya Sharma",
+  "description": "An interactive, elegant 3D birthday greeting card for Navya Sharma with ambient sparkles, candle blowing, celebration audio, and photo frame.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
