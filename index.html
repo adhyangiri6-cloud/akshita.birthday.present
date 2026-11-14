@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Birthday Card for Akshita</title>
-  <meta name="description" content="An interactive, elegant 3D birthday greeting card for Akshita with ambient sparkles, candle blowing, celebration audio, and photo frame." />
+  <title>Happy Birthday, Akshita! | Friendship Birthday Card</title>
+  <meta name="description" content="A cute, interactive 3D birthday greeting card for Akshita celebrating friendship, laughs, candle-blowing wishes, hype notes, and birthday vouchers." />
   <link rel="canonical" href="https://akshitabirthday.vercel.app/" />
   <meta property="og:url" content="https://akshitabirthday.vercel.app/" />
-  <meta property="og:title" content="Birthday Card for Akshita" />
-  <meta property="og:description" content="An interactive, elegant 3D birthday greeting card for Akshita with ambient sparkles, candle blowing, celebration audio, and photo frame." />
+  <meta property="og:title" content="Happy Birthday, Akshita! | Friendship Birthday Card" />
+  <meta property="og:description" content="A cute, interactive 3D birthday greeting card for Akshita celebrating friendship, laughs, candle-blowing wishes, hype notes, and birthday vouchers." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://akshitabirthday.vercel.app/" />
-  <meta name="twitter:title" content="Birthday Card for Akshita" />
-  <meta name="twitter:description" content="An interactive, elegant 3D birthday greeting card for Akshita with ambient sparkles, candle blowing, celebration audio, and photo frame." />
+  <meta name="twitter:title" content="Happy Birthday, Akshita! | Friendship Birthday Card" />
+  <meta name="twitter:description" content="A cute, interactive 3D birthday greeting card for Akshita celebrating friendship, laughs, candle-blowing wishes, hype notes, and birthday vouchers." />
 
-  <!-- Google Fonts: Playfair Display, Poppins, and Caveat (for handwritten polaroid note) -->
+  <!-- Google Fonts: Fredoka (cute playful display), Plus Jakarta Sans (clean body), and Caveat (handwritten notes) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Canvas Confetti CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -33,20 +33,23 @@
     }
 
     :root {
-      --bg-dark: #0b0716;
-      --bg-gradient: radial-gradient(circle at 50% 20%, #2a1445 0%, #150a26 45%, #080410 100%);
-      --accent-rose: #f472b6;
-      --accent-lavender: #c084fc;
-      --accent-gold: #fbbf24;
-      --accent-gold-light: #fef08a;
+      /* Cute Starry Slumber-Party & Friendship Palette */
+      --bg-dark: #140f2d;
+      --bg-gradient: radial-gradient(circle at 20% 20%, #2d1b5e 0%, #19123b 48%, #0e0a24 100%);
+      --accent-peach: #ff8fa3;
+      --accent-coral: #ff758f;
+      --accent-sunny: #ffd166;
+      --accent-mint: #6fffe9;
+      --accent-lilac: #c8b6ff;
       --text-white: #ffffff;
-      --text-soft: #e2d9f3;
-      --text-muted: #a395be;
-      --glass-bg: rgba(26, 17, 44, 0.72);
-      --glass-border: rgba(230, 195, 255, 0.18);
-      --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65), 0 0 40px rgba(192, 132, 252, 0.12);
-      --font-display: 'Playfair Display', Georgia, serif;
-      --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      --text-soft: #eae4ff;
+      --text-muted: #b3a8d6;
+      --glass-bg: rgba(31, 22, 66, 0.78);
+      --glass-surface: rgba(21, 14, 48, 0.72);
+      --glass-border: rgba(200, 182, 255, 0.22);
+      --glass-shadow: 0 24px 55px -12px rgba(7, 4, 22, 0.72), 0 0 42px rgba(111, 255, 233, 0.08);
+      --font-display: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-hand: 'Caveat', cursive, sans-serif;
     }
 
@@ -59,6 +62,16 @@
       font-family: var(--font-body);
       overflow-x: hidden;
       position: relative;
+      line-height: 1.5;
+    }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
 
     /* Ambient Canvas Sparkles */
@@ -81,7 +94,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px 16px 40px;
+      padding: 72px 16px 48px;
     }
 
     /* Top Control Bar */
@@ -95,34 +108,37 @@
       gap: 10px;
     }
 
-    .btn-audio-toggle, .btn-reopen {
+    .btn-audio-toggle, .btn-reopen, .btn-confetti-pop {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 14px;
+      min-height: 40px;
+      padding: 8px 16px;
       border-radius: 9999px;
-      background: rgba(28, 18, 48, 0.75);
+      background: rgba(31, 22, 66, 0.85);
       border: 1px solid var(--glass-border);
       color: var(--text-soft);
+      font-family: var(--font-body);
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       backdrop-filter: blur(12px);
-      transition: all 0.25s ease;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, border-color 0.2s ease;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
     }
 
-    .btn-audio-toggle:hover, .btn-reopen:hover {
-      background: rgba(45, 27, 78, 0.9);
+    .btn-audio-toggle:hover, .btn-reopen:hover, .btn-confetti-pop:hover {
+      background: rgba(51, 36, 102, 0.95);
       color: #fff;
-      border-color: rgba(244, 114, 182, 0.4);
-      transform: translateY(-1px);
+      border-color: var(--accent-mint);
+      transform: translateY(-2px);
     }
 
     .btn-audio-toggle.playing {
-      border-color: var(--accent-gold);
-      color: var(--accent-gold-light);
-      box-shadow: 0 0 16px rgba(251, 191, 36, 0.3);
+      border-color: var(--accent-sunny);
+      color: var(--accent-sunny);
+      box-shadow: 0 0 18px rgba(255, 209, 102, 0.28);
     }
 
     .eq-wave {
@@ -166,157 +182,145 @@
       flex-direction: column;
       align-items: center;
       gap: 6px;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+      background: transparent;
+      border: none;
+      color: inherit;
+      font-family: inherit;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
       user-select: none;
     }
 
     .sticker-badge {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background: rgba(36, 20, 62, 0.85);
-      border: 1.5px solid rgba(244, 114, 182, 0.35);
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: rgba(38, 26, 79, 0.88);
+      border: 1.5px solid rgba(255, 209, 102, 0.38);
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 26px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(192, 132, 252, 0.25);
-      transition: all 0.3s ease;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(200, 182, 255, 0.2);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .sticker-label {
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      letter-spacing: 0.3px;
       color: var(--text-soft);
-      background: rgba(18, 10, 32, 0.7);
-      padding: 3px 8px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(20, 14, 45, 0.8);
+      padding: 3px 9px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
       backdrop-filter: blur(8px);
       white-space: nowrap;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     .floating-sticker:hover .sticker-badge {
-      transform: scale(1.15) rotate(6deg);
-      border-color: var(--accent-gold);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 24px rgba(251, 191, 36, 0.4);
+      transform: scale(1.16) rotate(8deg);
+      border-color: var(--accent-mint);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 22px rgba(111, 255, 233, 0.35);
     }
 
     .floating-sticker:hover .sticker-label {
       color: #fff;
-      border-color: rgba(244, 114, 182, 0.4);
+      border-color: var(--accent-mint);
     }
 
-    /* Individual Sticker Positions & Floating Animations */
-    .sticker-1 {
-      top: 14%;
-      left: 6%;
-      animation: floatSticker1 6s infinite ease-in-out;
-    }
-    .sticker-2 {
-      top: 18%;
-      right: 7%;
-      animation: floatSticker2 7s infinite ease-in-out;
-    }
-    .sticker-3 {
-      bottom: 12%;
-      left: 8%;
-      animation: floatSticker3 6.5s infinite ease-in-out;
-    }
-    .sticker-4 {
-      bottom: 14%;
-      right: 8%;
-      animation: floatSticker4 5.8s infinite ease-in-out;
-    }
+    /* Sticker Positions & Animations */
+    .sticker-1 { top: 15%; left: 5%; animation: floatSticker1 6s infinite ease-in-out; }
+    .sticker-2 { top: 19%; right: 6%; animation: floatSticker2 7s infinite ease-in-out; }
+    .sticker-3 { bottom: 11%; left: 6%; animation: floatSticker3 6.5s infinite ease-in-out; }
+    .sticker-4 { bottom: 13%; right: 6%; animation: floatSticker4 5.8s infinite ease-in-out; }
 
     @keyframes floatSticker1 {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-16px) rotate(4deg); }
+      50% { transform: translateY(-14px) rotate(4deg); }
     }
     @keyframes floatSticker2 {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(-5deg); }
+      50% { transform: translateY(-16px) rotate(-5deg); }
     }
     @keyframes floatSticker3 {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-14px) rotate(-3deg); }
+      50% { transform: translateY(-12px) rotate(-3deg); }
     }
     @keyframes floatSticker4 {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-18px) rotate(6deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
     }
 
-    @media (max-width: 768px) {
-      .sticker-badge { width: 46px; height: 46px; font-size: 20px; }
-      .sticker-label { font-size: 9.5px; padding: 2px 6px; }
-      .sticker-1 { top: 8%; left: 3%; }
-      .sticker-2 { top: 8%; right: 3%; }
-      .sticker-3 { bottom: 6%; left: 4%; }
-      .sticker-4 { bottom: 6%; right: 4%; }
+    @media (max-width: 900px) {
+      .floating-stickers-container {
+        position: static;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+        padding: 0 16px 28px;
+        pointer-events: auto;
+      }
+      .floating-sticker {
+        position: static;
+        animation: none;
+      }
+      .sticker-badge { width: 48px; height: 48px; font-size: 22px; border-radius: 14px; }
     }
 
     /* ====================================================
-       STAGE 1: ENVELOPE / 3D COVER VIEW
+       STAGE 1: CUTE 3D ENVELOPE COVER
        ==================================================== */
     .stage-wrapper {
       perspective: 1400px;
       width: 100%;
-      max-width: 880px;
+      max-width: 980px;
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: all 0.6s ease;
     }
 
-    /* Closed Envelope Container */
     .envelope-screen {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       width: 100%;
-      max-width: 540px;
-      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 520px;
+      transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .envelope-screen.hidden {
       display: none;
       opacity: 0;
       pointer-events: none;
-      transform: scale(0.9) translateY(40px);
+      transform: scale(0.92) translateY(30px);
     }
 
-    .envelope-teaser-badge {
+    .envelope-kicker {
       font-size: 13px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent-rose);
-      background: rgba(244, 114, 182, 0.1);
-      border: 1px solid rgba(244, 114, 182, 0.3);
-      padding: 6px 18px;
-      border-radius: 30px;
-      margin-bottom: 24px;
       font-weight: 600;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 20px rgba(244, 114, 182, 0.2);
+      color: var(--accent-mint);
+      letter-spacing: 0.6px;
+      margin-bottom: 18px;
+      text-align: center;
     }
 
-    /* 3D Envelope Element */
+    /* 3D Envelope */
     .envelope-card {
       position: relative;
       width: 100%;
-      height: 340px;
-      background: linear-gradient(145deg, #2b1747 0%, #1a0c30 100%);
-      border-radius: 20px;
-      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.75), 0 0 50px rgba(192, 132, 252, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(216, 180, 254, 0.25);
+      height: 330px;
+      background: linear-gradient(145deg, #32216b 0%, #20144b 100%);
+      border-radius: 24px;
+      box-shadow: 0 28px 60px -15px rgba(5, 3, 18, 0.78), 0 0 45px rgba(200, 182, 255, 0.16), inset 0 1px 1px rgba(255, 255, 255, 0.16);
+      border: 1.5px solid rgba(200, 182, 255, 0.28);
       cursor: pointer;
       transform-style: preserve-3d;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -326,23 +330,22 @@
 
     .envelope-card:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 35px 70px -10px rgba(0, 0, 0, 0.8), 0 0 65px rgba(244, 114, 182, 0.3);
-      border-color: rgba(244, 114, 182, 0.45);
+      box-shadow: 0 36px 70px -10px rgba(5, 3, 18, 0.85), 0 0 55px rgba(111, 255, 233, 0.22);
+      border-color: rgba(111, 255, 233, 0.55);
     }
 
-    /* Envelope Visual Flaps (CSS Triangles & Gradients) */
     .envelope-flap-top {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 180px;
-      background: linear-gradient(180deg, #371d5c 0%, #261142 100%);
+      height: 175px;
+      background: linear-gradient(180deg, #432c8a 0%, #2e1d64 100%);
       clip-path: polygon(0 0, 50% 100%, 100% 0);
       transform-origin: top center;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 5;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
     }
 
     .envelope-card.opening .envelope-flap-top {
@@ -354,40 +357,39 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 220px;
-      background: linear-gradient(0deg, #1f0d36 0%, #2a1448 100%);
+      height: 215px;
+      background: linear-gradient(0deg, #21154a 0%, #2d1d63 100%);
       clip-path: polygon(0 100%, 100% 100%, 100% 0, 50% 50%, 0 0);
       z-index: 4;
-      opacity: 0.95;
+      opacity: 0.96;
     }
 
-    /* Ribbon & Wax Seal */
+    /* Cute Sunny Star Seal */
     .wax-seal {
       position: absolute;
-      top: 155px;
+      top: 145px;
       width: 72px;
       height: 72px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ffd166 0%, #e09f3e 55%, #9e2a2b 100%);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.4), 0 0 24px rgba(255, 209, 102, 0.45);
+      background: radial-gradient(circle at 35% 30%, #fff3b0 0%, #ffd166 55%, #f4a261 100%);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.65), 0 0 24px rgba(255, 209, 102, 0.45);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 6;
-      border: 2px solid rgba(255, 238, 173, 0.4);
-      transition: transform 0.3s ease;
+      border: 2.5px solid rgba(255, 250, 224, 0.7);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .wax-seal-initial {
       font-family: var(--font-display);
       font-size: 32px;
-      font-weight: 800;
-      color: #3b0918;
-      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.35);
+      font-weight: 700;
+      color: #24134d;
     }
 
     .envelope-card:hover .wax-seal {
-      transform: scale(1.1);
+      transform: scale(1.12) rotate(-6deg);
     }
 
     .envelope-details {
@@ -400,64 +402,57 @@
 
     .envelope-recipient {
       font-family: var(--font-display);
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 700;
       color: #fff;
-      letter-spacing: 0.5px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      letter-spacing: 0.3px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
     }
 
     .envelope-subline {
-      font-size: 13px;
-      color: var(--accent-rose);
+      font-size: 13.5px;
+      color: var(--accent-sunny);
       margin-top: 4px;
       font-weight: 500;
-      letter-spacing: 0.5px;
     }
 
-    /* Prompt Button */
     .pulse-action-btn {
-      margin-top: 28px;
+      margin-top: 26px;
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: linear-gradient(135deg, #f472b6 0%, #c084fc 50%, #fbbf24 100%);
-      color: #120420;
+      background: linear-gradient(135deg, #ffd166 0%, #ff8fa3 55%, #6fffe9 100%);
+      color: #160e33;
+      font-family: var(--font-display);
       font-weight: 700;
-      font-size: 15px;
-      padding: 14px 34px;
+      font-size: 16px;
+      padding: 14px 32px;
       border-radius: 9999px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(244, 114, 182, 0.45), 0 0 20px rgba(192, 132, 252, 0.3);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      animation: pulseGlow 2s infinite ease-in-out;
+      box-shadow: 0 10px 28px rgba(255, 143, 163, 0.35), 0 0 22px rgba(255, 209, 102, 0.25);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+      animation: bouncePrompt 2.2s infinite ease-in-out;
     }
 
     .pulse-action-btn:hover {
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 14px 40px rgba(244, 114, 182, 0.6), 0 0 30px rgba(251, 191, 36, 0.5);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 14px 36px rgba(255, 143, 163, 0.5), 0 0 30px rgba(111, 255, 233, 0.4);
     }
 
-    @keyframes pulseGlow {
-      0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 10px 30px rgba(244, 114, 182, 0.45);
-      }
-      50% {
-        transform: scale(1.03);
-        box-shadow: 0 14px 38px rgba(244, 114, 182, 0.65), 0 0 24px rgba(251, 191, 36, 0.4);
-      }
+    @keyframes bouncePrompt {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-4px) scale(1.03); }
     }
 
     /* ====================================================
-       STAGE 2: EXPANDED 3D BIRTHDAY CARD
+       STAGE 2: INNER BIRTHDAY CARD (FRIENDSHIP THEME)
        ==================================================== */
     .inner-card-screen {
       display: none;
       width: 100%;
-      max-width: 960px;
-      animation: cardAppear 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      max-width: 1000px;
+      animation: cardAppear 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       perspective: 1200px;
     }
 
@@ -468,7 +463,7 @@
     @keyframes cardAppear {
       0% {
         opacity: 0;
-        transform: translateY(60px) scale(0.9) rotateX(10deg);
+        transform: translateY(50px) scale(0.92) rotateX(8deg);
       }
       100% {
         opacity: 1;
@@ -476,46 +471,44 @@
       }
     }
 
-    /* Glass Card Body */
     .birthday-card-container {
       background: var(--glass-bg);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
       border: 1px solid var(--glass-border);
       border-radius: 28px;
       box-shadow: var(--glass-shadow);
-      padding: 44px 40px;
+      padding: 40px 38px;
       position: relative;
       overflow: hidden;
     }
 
-    /* Ambient Corner Gradients inside card */
-    .card-glow-bg {
+    /* Soft ambient corner glows */
+    .card-glow-top {
       position: absolute;
-      top: -100px;
-      right: -100px;
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, rgba(244, 114, 182, 0.16) 0%, rgba(192, 132, 252, 0.08) 50%, transparent 80%);
+      top: -110px;
+      right: -90px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(111, 255, 233, 0.14) 0%, rgba(200, 182, 255, 0.06) 55%, transparent 80%);
       pointer-events: none;
       border-radius: 50%;
     }
 
-    .card-glow-bg-bottom {
+    .card-glow-bottom {
       position: absolute;
-      bottom: -100px;
-      left: -100px;
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, rgba(192, 132, 252, 0.05) 50%, transparent 80%);
+      bottom: -110px;
+      left: -90px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 209, 102, 0.14) 0%, rgba(255, 143, 163, 0.06) 55%, transparent 80%);
       pointer-events: none;
       border-radius: 50%;
     }
 
-    /* Two-Column Card Grid */
     .card-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 36px;
       align-items: start;
       position: relative;
@@ -525,49 +518,40 @@
     @media (max-width: 860px) {
       .card-grid {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 28px;
       }
       .birthday-card-container {
-        padding: 30px 20px;
+        padding: 28px 20px;
         border-radius: 22px;
       }
     }
 
-    /* Left Column Content */
-    .card-greeting-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
+    /* Left Column: Greeting & Cake */
+    .card-kicker {
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--accent-gold);
-      background: rgba(251, 191, 36, 0.1);
-      border: 1px solid rgba(251, 191, 36, 0.28);
-      padding: 5px 14px;
-      border-radius: 20px;
-      margin-bottom: 16px;
+      color: var(--accent-mint);
+      letter-spacing: 0.4px;
+      margin-bottom: 10px;
     }
 
     .birthday-headline {
       font-family: var(--font-display);
-      font-size: clamp(34px, 5vw, 48px);
-      font-weight: 800;
+      font-size: clamp(32px, 4.5vw, 46px);
+      font-weight: 700;
       line-height: 1.15;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #ffffff 30%, #fbcfe8 70%, #fed7aa 100%);
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, #ffffff 25%, #ffd166 65%, #6fffe9 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
+      text-wrap: balance;
     }
 
     .birthday-message-text {
       font-size: 15px;
       line-height: 1.7;
       color: var(--text-soft);
-      margin-bottom: 22px;
-      font-weight: 400;
+      margin-bottom: 20px;
     }
 
     .birthday-message-text p {
@@ -579,87 +563,80 @@
     }
 
     .highlight-word {
-      color: #fff;
-      font-weight: 600;
-      text-decoration: underline;
-      text-decoration-color: rgba(244, 114, 182, 0.5);
-      text-underline-offset: 3px;
+      color: var(--accent-sunny);
+      font-weight: 700;
     }
 
     .signature-block {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px dashed rgba(255, 255, 255, 0.15);
-      padding-top: 16px;
-      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.16);
+      padding-top: 14px;
+      margin-bottom: 24px;
     }
 
     .signature-text {
       font-family: var(--font-hand);
       font-size: 26px;
-      color: var(--accent-rose);
-      transform: rotate(-1.5deg);
+      color: var(--accent-peach);
+      transform: rotate(-1deg);
     }
 
-    .signature-date {
-      font-size: 12px;
+    .signature-meta {
+      font-size: 12.5px;
       color: var(--text-muted);
-      letter-spacing: 0.5px;
     }
 
     /* ====================================================
        INTERACTIVE CAKE & CANDLE SECTION
        ==================================================== */
     .cake-interaction-panel {
-      background: rgba(20, 12, 34, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 24px;
+      background: var(--glass-surface);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      padding: 22px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
-      position: relative;
     }
 
     .cake-svg-wrapper {
       position: relative;
-      width: 220px;
-      height: 140px;
-      margin-bottom: 14px;
+      width: 210px;
+      height: 136px;
+      margin-bottom: 12px;
       display: flex;
       justify-content: center;
       align-items: flex-end;
       cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Candle Flames */
+    .cake-svg-wrapper:hover {
+      transform: scale(1.04);
+    }
+
     .flame {
       transform-origin: center bottom;
-      transition: opacity 0.5s ease, transform 0.4s ease;
-      filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.8)) drop-shadow(0 0 16px rgba(244, 114, 182, 0.6));
-      animation: flameFlicker 1.2s infinite alternate ease-in-out;
+      transition: opacity 0.45s ease, transform 0.35s ease;
+      filter: drop-shadow(0 0 8px rgba(255, 209, 102, 0.85)) drop-shadow(0 0 14px rgba(255, 143, 163, 0.6));
+      animation: flameFlicker 1.1s infinite alternate ease-in-out;
     }
 
     .flame-1 { animation-delay: 0s; }
-    .flame-2 { animation-delay: 0.3s; }
-    .flame-3 { animation-delay: 0.6s; }
+    .flame-2 { animation-delay: 0.25s; }
+    .flame-3 { animation-delay: 0.55s; }
 
     @keyframes flameFlicker {
-      0% {
-        transform: scale(1) rotate(-1.5deg);
-      }
-      50% {
-        transform: scale(1.08, 0.95) rotate(2deg);
-      }
-      100% {
-        transform: scale(0.96, 1.05) rotate(-2.5deg);
-      }
+      0% { transform: scale(1) rotate(-1.5deg); }
+      50% { transform: scale(1.08, 0.94) rotate(2deg); }
+      100% { transform: scale(0.96, 1.05) rotate(-2.5deg); }
     }
 
-    /* Smoke effect when blown */
     .smoke-puff {
       opacity: 0;
       transform-origin: center bottom;
@@ -673,26 +650,17 @@
     }
 
     .candles-blown .smoke-puff {
-      animation: smokeRise 1.6s ease-out forwards;
+      animation: smokeRise 1.5s ease-out forwards;
     }
 
     @keyframes smokeRise {
-      0% {
-        opacity: 0.8;
-        transform: translateY(0) scale(0.6);
-      }
-      50% {
-        opacity: 0.6;
-        transform: translateY(-20px) scale(1.2) translateX(4px);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-40px) scale(1.8) translateX(-6px);
-      }
+      0% { opacity: 0.85; transform: translateY(0) scale(0.6); }
+      50% { opacity: 0.6; transform: translateY(-18px) scale(1.2) translateX(4px); }
+      100% { opacity: 0; transform: translateY(-38px) scale(1.7) translateX(-5px); }
     }
 
     .wish-instruction {
-      font-size: 13px;
+      font-size: 13.5px;
       color: var(--text-soft);
       margin-bottom: 14px;
       min-height: 20px;
@@ -703,167 +671,291 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: linear-gradient(135deg, #fbbf24 0%, #f472b6 100%);
-      color: #1a0528;
+      min-height: 44px;
+      background: linear-gradient(135deg, #ffd166 0%, #ff8fa3 100%);
+      color: #1c103b;
+      font-family: var(--font-display);
       font-weight: 700;
-      font-size: 14px;
-      padding: 10px 24px;
+      font-size: 15px;
+      padding: 10px 26px;
       border-radius: 9999px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(251, 191, 36, 0.35);
-      transition: all 0.25s ease;
+      box-shadow: 0 6px 20px rgba(255, 209, 102, 0.3);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
     }
 
     .btn-blow-candles:hover {
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 8px 25px rgba(251, 191, 36, 0.5);
+      box-shadow: 0 10px 26px rgba(255, 209, 102, 0.45);
     }
 
     /* ====================================================
-       POLAROID PHOTO FRAME SECTION
+       RIGHT COLUMN: CUTE INTERACTIVE BESTIE PLAYGROUND
        ==================================================== */
-    .polaroid-wrapper {
+    .bestie-zone {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      position: relative;
+      gap: 20px;
     }
 
-    .polaroid-card {
-      background: #ffffff;
-      padding: 14px 14px 22px 14px;
-      border-radius: 6px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0,0,0,0.25);
-      transform: rotate(2deg);
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      width: 100%;
-      max-width: 320px;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .polaroid-card:hover {
-      transform: rotate(0deg) scale(1.03);
-      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(244, 114, 182, 0.3);
-    }
-
-    /* Washi Tape Effect */
-    .washi-tape {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 110px;
-      height: 28px;
-      background: rgba(253, 224, 71, 0.85);
-      border: 1px solid rgba(234, 179, 8, 0.4);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-      backdrop-filter: blur(2px);
-      z-index: 10;
-      clip-path: polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%);
-      opacity: 0.9;
-    }
-
-    .polaroid-photo-box {
-      width: 100%;
-      height: 260px;
-      background: #1e1333;
-      border-radius: 3px;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
-    .polaroid-photo-box.drag-over {
-      border: 2px dashed #f472b6;
-      background: #2d184a;
-    }
-
-    .polaroid-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-
-    .polaroid-card:hover .polaroid-img {
-      transform: scale(1.04);
-    }
-
-    .photo-overlay-prompt {
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 6, 28, 0.6);
-      opacity: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 500;
-      gap: 6px;
-      transition: opacity 0.25s ease;
-      backdrop-filter: blur(4px);
-    }
-
-    .polaroid-photo-box:hover .photo-overlay-prompt {
-      opacity: 1;
-    }
-
-    .polaroid-caption {
-      margin-top: 14px;
+    /* 1. Bestie Hype Note Dispenser */
+    .hype-jar-card {
+      background: var(--glass-surface);
+      border: 1px solid rgba(255, 209, 102, 0.25);
+      border-radius: 22px;
+      padding: 24px 22px;
       text-align: center;
+      position: relative;
+    }
+
+    .hype-jar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .hype-jar-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--accent-sunny);
+    }
+
+    .hype-counter {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-mint);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cute-note-slip {
+      background: linear-gradient(145deg, #fff9ec 0%, #fff1f5 100%);
+      color: #241646;
+      border-radius: 16px;
+      padding: 20px 18px;
+      min-height: 128px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      border: 2px dashed rgba(255, 117, 143, 0.45);
+    }
+
+    .cute-note-slip:hover {
+      transform: translateY(-3px) rotate(-0.8deg);
+    }
+
+    .cute-note-slip.pop-anim {
+      animation: notePop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes notePop {
+      0% { transform: scale(0.9) rotate(-2deg); opacity: 0.6; }
+      60% { transform: scale(1.04) rotate(1deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .note-emoji {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .note-text {
       font-family: var(--font-hand);
       font-size: 24px;
       font-weight: 700;
-      color: #2b1842;
-      line-height: 1.2;
-      cursor: text;
+      line-height: 1.25;
+      color: #26144d;
     }
 
-    .polaroid-caption:focus {
-      outline: 1px dashed #f472b6;
-      border-radius: 4px;
-    }
-
-    .polaroid-actions {
-      margin-top: 16px;
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-
-    .btn-photo-action {
-      background: rgba(36, 20, 62, 0.8);
-      border: 1px solid var(--glass-border);
-      color: var(--text-soft);
+    .note-sub {
       font-size: 12px;
-      padding: 6px 14px;
-      border-radius: 20px;
+      font-weight: 600;
+      color: #7c4d7a;
+    }
+
+    .hype-actions {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-next-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 9px 20px;
+      border-radius: 9999px;
+      border: none;
+      background: linear-gradient(135deg, #6fffe9 0%, #c8b6ff 100%);
+      color: #140c30;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
       cursor: pointer;
+      box-shadow: 0 6px 18px rgba(111, 255, 233, 0.25);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+    }
+
+    .btn-next-note:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 10px 24px rgba(111, 255, 233, 0.4);
+    }
+
+    /* 2. High-Five / Cheer Counter Button */
+    .btn-high-five {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
+      min-height: 42px;
+      padding: 9px 16px;
+      border-radius: 9999px;
+      border: 1.5px solid rgba(255, 143, 163, 0.45);
+      background: rgba(255, 143, 163, 0.14);
+      color: #ffd6de;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-variant-numeric: tabular-nums;
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease;
     }
 
-    .btn-photo-action:hover {
-      background: rgba(244, 114, 182, 0.25);
+    .btn-high-five:hover {
+      background: rgba(255, 143, 163, 0.26);
+      transform: translateY(-2px);
+    }
+
+    .btn-high-five:active {
+      transform: scale(0.95);
+    }
+
+    /* 3. Interactive Bestie Birthday Vouchers */
+    .vouchers-card {
+      background: var(--glass-surface);
+      border: 1px solid rgba(200, 182, 255, 0.22);
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    .vouchers-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .vouchers-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
       color: #fff;
-      border-color: rgba(244, 114, 182, 0.5);
     }
 
-    /* Modal / Pop-out Note for Floating Stickers */
+    .vouchers-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .voucher-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .voucher-btn {
+      width: 100%;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1.5px dashed rgba(200, 182, 255, 0.35);
+      background: rgba(38, 25, 79, 0.65);
+      color: var(--text-soft);
+      font-family: var(--font-body);
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .voucher-btn:hover {
+      transform: translateX(3px);
+      background: rgba(54, 37, 107, 0.85);
+      border-color: var(--accent-sunny);
+    }
+
+    .voucher-btn.claimed {
+      background: rgba(111, 255, 233, 0.14);
+      border-style: solid;
+      border-color: var(--accent-mint);
+      color: #ffffff;
+    }
+
+    .voucher-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .voucher-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .voucher-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .voucher-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .voucher-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .voucher-status {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-sunny);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .voucher-btn.claimed .voucher-status {
+      color: var(--accent-mint);
+    }
+
+    /* ====================================================
+       STICKER POPUP MODAL (FRIENDSHIP NOTES)
+       ==================================================== */
     .sticker-modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(7, 3, 15, 0.75);
+      background: rgba(10, 6, 26, 0.78);
       backdrop-filter: blur(8px);
       z-index: 1000;
       display: flex;
@@ -872,7 +964,7 @@
       padding: 20px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
     }
 
     .sticker-modal-overlay.active {
@@ -881,16 +973,16 @@
     }
 
     .sticker-modal-card {
-      background: linear-gradient(145deg, #25143f 0%, #17092b 100%);
-      border: 1px solid rgba(244, 114, 182, 0.35);
+      background: linear-gradient(145deg, #2a1c5c 0%, #19103c 100%);
+      border: 1.5px solid rgba(111, 255, 233, 0.35);
       border-radius: 24px;
       width: 100%;
       max-width: 420px;
-      padding: 32px 28px;
+      padding: 32px 26px;
       text-align: center;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(244, 114, 182, 0.2);
-      transform: scale(0.9) translateY(20px);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(111, 255, 233, 0.16);
+      transform: scale(0.92) translateY(16px);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
     }
 
@@ -899,17 +991,17 @@
     }
 
     .modal-icon-badge {
-      width: 70px;
-      height: 70px;
+      width: 68px;
+      height: 68px;
       margin: 0 auto 16px;
-      border-radius: 50%;
-      background: rgba(244, 114, 182, 0.15);
-      border: 1px solid rgba(244, 114, 182, 0.4);
+      border-radius: 20px;
+      background: rgba(255, 209, 102, 0.16);
+      border: 1.5px solid rgba(255, 209, 102, 0.45);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 32px;
-      box-shadow: 0 0 25px rgba(244, 114, 182, 0.3);
+      box-shadow: 0 0 22px rgba(255, 209, 102, 0.25);
     }
 
     .modal-title {
@@ -917,43 +1009,40 @@
       font-size: 22px;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .modal-body-text {
       font-size: 14.5px;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--text-soft);
       margin-bottom: 24px;
     }
 
     .btn-modal-close {
-      background: linear-gradient(135deg, #f472b6 0%, #c084fc 100%);
+      min-height: 44px;
+      background: linear-gradient(135deg, #ffd166 0%, #ff8fa3 100%);
       border: none;
-      color: #120420;
+      color: #180d36;
+      font-family: var(--font-display);
       font-weight: 700;
-      font-size: 14px;
+      font-size: 15px;
       padding: 10px 28px;
       border-radius: 9999px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(244, 114, 182, 0.4);
-      transition: all 0.2s ease;
+      box-shadow: 0 8px 20px rgba(255, 143, 163, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .btn-modal-close:hover {
       transform: scale(1.05);
-      box-shadow: 0 10px 26px rgba(244, 114, 182, 0.6);
+      box-shadow: 0 10px 26px rgba(255, 143, 163, 0.55);
     }
 
     /* Accessibility focus */
-    button:focus-visible, input:focus-visible {
-      outline: 2px solid var(--accent-gold);
-      outline-offset: 2px;
-    }
-
-    /* Hidden file input */
-    #photoFileInput {
-      display: none;
+    button:focus-visible, [role="button"]:focus-visible {
+      outline: 2.5px solid var(--accent-mint);
+      outline-offset: 3px;
     }
   </style>
 </head>
@@ -962,51 +1051,24 @@
   <!-- Ambient Starlight Canvas (Particle Background) -->
   <canvas id="ambientCanvas"></canvas>
 
-  <!-- Top Controls: Audio toggle & Re-fold card -->
+  <!-- Top Controls: Audio toggle & Envelope View -->
   <div class="top-bar">
     <button id="btnReopenCard" class="btn-reopen" style="display: none;" title="Fold card back to envelope">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
         <polyline points="9 22 9 12 15 12 15 22"/>
       </svg>
       <span>Envelope View</span>
     </button>
 
-    <button id="btnMusicToggle" class="btn-audio-toggle" title="Play / Pause Birthday Music">
-      <div class="eq-wave">
+    <button id="btnMusicToggle" class="btn-audio-toggle" title="Play or Pause Birthday Melody">
+      <div class="eq-wave" aria-hidden="true">
         <div class="eq-bar"></div>
         <div class="eq-bar"></div>
         <div class="eq-bar"></div>
       </div>
       <span id="musicBtnLabel">Birthday Melody</span>
     </button>
-  </div>
-
-  <!-- Floating Stickers (Interactive Pop-outs) -->
-  <div class="floating-stickers-container">
-    <!-- Sticker 1: Balloon -->
-    <div id="stickerBalloon" class="floating-sticker sticker-1" title="Click for a surprise wish!">
-      <div class="sticker-badge">🎈</div>
-      <div class="sticker-label">Joy Air</div>
-    </div>
-
-    <!-- Sticker 2: Gift Box -->
-    <div id="stickerGift" class="floating-sticker sticker-2" title="Unwrap birthday blessing!">
-      <div class="sticker-badge">🎁</div>
-      <div class="sticker-label">Unwrap</div>
-    </div>
-
-    <!-- Sticker 3: Starlight -->
-    <div id="stickerStar" class="floating-sticker sticker-3" title="Starlight wish for Akshita!">
-      <div class="sticker-badge">⭐</div>
-      <div class="sticker-label">Starlight</div>
-    </div>
-
-    <!-- Sticker 4: Music / Dance -->
-    <div id="stickerMusic" class="floating-sticker sticker-4" title="Celebration beat!">
-      <div class="sticker-badge">🎶</div>
-      <div class="sticker-label">Vibes</div>
-    </div>
   </div>
 
   <!-- Main Viewport -->
@@ -1017,29 +1079,29 @@
            STAGE 1: 3D ENVELOPE / INTRO SCREEN
            ============================================== -->
       <section id="envelopeScreen" class="envelope-screen">
-        <div class="envelope-teaser-badge">✦ Handcrafted For Akshita ✦</div>
+        <p class="envelope-kicker">Made with bestie vibes for Akshita</p>
 
         <!-- 3D Interactive Envelope Card -->
         <div id="envelopeCard" class="envelope-card" role="button" tabindex="0" aria-label="Open Birthday Card for Akshita">
           <div class="envelope-flap-top"></div>
           <div class="envelope-body-overlay"></div>
 
-          <!-- Wax Seal with monogram 'A' -->
+          <!-- Sunny Seal with monogram 'A' -->
           <div class="wax-seal">
             <span class="wax-seal-initial">A</span>
           </div>
 
           <!-- Envelope Front Details -->
           <div class="envelope-details">
-            <h2 class="envelope-recipient">For Akshita</h2>
-            <p class="envelope-subline">A special birthday surprise awaits inside...</p>
+            <h2 class="envelope-recipient">For Akshita!</h2>
+            <p class="envelope-subline">A special birthday surprise from your friend awaits inside...</p>
           </div>
         </div>
 
         <!-- Click to Open Prompt -->
         <button id="btnOpenCard" class="pulse-action-btn">
           <span>Click to Open Card</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14"/>
             <path d="m12 5 7 7-7 7"/>
           </svg>
@@ -1047,118 +1109,108 @@
       </section>
 
       <!-- ==============================================
-           STAGE 2: INNER CARD (EXPANDED GREETING EXPERIENCE)
+           STAGE 2: INNER CARD (CUTE FRIENDSHIP EDITION)
            ============================================== -->
       <section id="innerCardScreen" class="inner-card-screen" aria-hidden="true">
         <div class="birthday-card-container">
-          <div class="card-glow-bg"></div>
-          <div class="card-glow-bg-bottom"></div>
+          <div class="card-glow-top"></div>
+          <div class="card-glow-bottom"></div>
 
           <div class="card-grid">
-            <!-- Left Side: Heartfelt Message & Interactive Cake -->
+            <!-- Left Side: Heartfelt Friendship Message & Interactive Cake -->
             <div class="card-content-col">
-              <div class="card-greeting-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-                <span>To An Extraordinary Friend</span>
-              </div>
+              <p class="card-kicker">Bestie Birthday Edition</p>
 
-              <h1 class="birthday-headline">Happy Birthday,<br/>Akshita! ✨</h1>
+              <h1 class="birthday-headline">Happy Birthday,<br/>Akshita! 🥳</h1>
 
               <div class="birthday-message-text">
                 <p>
-                  Dearest <span class="highlight-word">Akshita</span>, on this magical day, here’s celebrating the radiant energy, boundless laughter, and infectious positivity you bring to everyone around you!
+                  Hey <span class="highlight-word">Akshita</span>! Happy birthday to one of the funniest, kindest, and most chaotic-in-the-best-way friends ever!
                 </p>
                 <p>
-                  May this milestone chapter shower you with unforgettable adventures, dreams turning into bold realities, peaceful sunny mornings, and every ounce of genuine happiness your heart can hold.
+                  Thank you for every inside joke, random voice note, late-night pep talk, and moment you’ve turned an ordinary day into a core memory. Life is genuinely way brighter with you in the squad.
                 </p>
                 <p>
-                  Thank you for being such an inspiring soul and a cherished friend. Keep brightening the world with your unique sparkle!
+                  Here’s to another year of big wins, zero stress, endless iced coffee runs, and adventures we’ll still be laughing about years from now!
                 </p>
               </div>
 
               <div class="signature-block">
-                <div class="signature-text">With heartfelt love always ♡</div>
-                <div class="signature-date">September Celebration</div>
+                <div class="signature-text">Cheers to our friendship! 🙌</div>
+                <div class="signature-meta">Official Hype Squad</div>
               </div>
 
               <!-- Interactive Cake & Candle Blow Section -->
               <div class="cake-interaction-panel">
-                <!-- SVG Birthday Cake with 3 Candles -->
-                <div id="cakeWrapper" class="cake-svg-wrapper" title="Click candles or button below to make a wish!">
-                  <svg width="200" height="135" viewBox="0 0 200 135" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Cake Plate / Stand -->
-                    <ellipse cx="100" cy="128" rx="85" ry="7" fill="#180e29" />
-                    <ellipse cx="100" cy="126" rx="80" ry="6" fill="#4a2d75" stroke="#a78bfa" stroke-width="1.5"/>
+                <div id="cakeWrapper" class="cake-svg-wrapper" role="button" tabindex="0" aria-label="Birthday cake with candles — click to blow them out or relight">
+                  <svg width="200" height="135" viewBox="0 0 200 135" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <!-- Cake Plate -->
+                    <ellipse cx="100" cy="128" rx="85" ry="7" fill="#100a26" />
+                    <ellipse cx="100" cy="126" rx="80" ry="6" fill="#3a2a72" stroke="#6fffe9" stroke-width="1.5"/>
 
                     <!-- Bottom Cake Tier -->
-                    <path d="M35 88 C35 88, 35 120, 100 120 C165 120, 165 88, 165 88 L165 74 C165 74, 165 106, 100 106 C35 106, 35 74, 35 74 Z" fill="#6d28d9"/>
-                    <ellipse cx="100" cy="74" rx="65" ry="14" fill="#8b5cf6" stroke="#c4b5fd" stroke-width="1"/>
+                    <path d="M35 88 C35 88, 35 120, 100 120 C165 120, 165 88, 165 88 L165 74 C165 74, 165 106, 100 106 C35 106, 35 74, 35 74 Z" fill="#6c5ce7"/>
+                    <ellipse cx="100" cy="74" rx="65" ry="14" fill="#a29bfe" stroke="#dcd6ff" stroke-width="1"/>
 
-                    <!-- Bottom Tier Cream Frosting Drips -->
-                    <path d="M35 74 Q45 86 55 77 Q65 92 75 78 Q88 95 100 80 Q112 94 125 79 Q135 90 145 77 Q155 86 165 74" fill="none" stroke="#fbcfe8" stroke-width="5" stroke-linecap="round"/>
+                    <!-- Bottom Tier Frosting Drips -->
+                    <path d="M35 74 Q45 86 55 77 Q65 92 75 78 Q88 95 100 80 Q112 94 125 79 Q135 90 145 77 Q155 86 165 74" fill="none" stroke="#fff3b0" stroke-width="5" stroke-linecap="round"/>
 
                     <!-- Top Cake Tier -->
-                    <path d="M55 48 C55 48, 55 75, 100 75 C145 75, 145 48, 145 48 L145 38 C145 38, 145 65, 100 65 C55 65, 55 38, 55 38 Z" fill="#ec4899"/>
-                    <ellipse cx="100" cy="38" rx="45" ry="10" fill="#f472b6" stroke="#fbcfe8" stroke-width="1"/>
+                    <path d="M55 48 C55 48, 55 75, 100 75 C145 75, 145 48, 145 48 L145 38 C145 38, 145 65, 100 65 C55 65, 55 38, 55 38 Z" fill="#ff758f"/>
+                    <ellipse cx="100" cy="38" rx="45" ry="10" fill="#ff8fa3" stroke="#ffd6de" stroke-width="1"/>
 
-                    <!-- Top Tier Cream Frosting Drips & Pearls -->
-                    <path d="M55 38 Q65 48 75 41 Q85 53 100 42 Q115 52 125 41 Q135 48 145 38" fill="none" stroke="#fef08a" stroke-width="4" stroke-linecap="round"/>
-                    <circle cx="70" cy="36" r="2.5" fill="#fde047" />
-                    <circle cx="100" cy="38" r="3" fill="#f43f5e" />
-                    <circle cx="130" cy="36" r="2.5" fill="#fde047" />
+                    <!-- Top Tier Cream Frosting & Sprinkles -->
+                    <path d="M55 38 Q65 48 75 41 Q85 53 100 42 Q115 52 125 41 Q135 48 145 38" fill="none" stroke="#6fffe9" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="70" cy="36" r="2.5" fill="#ffd166" />
+                    <circle cx="100" cy="38" r="3" fill="#ffffff" />
+                    <circle cx="130" cy="36" r="2.5" fill="#ffd166" />
 
-                    <!-- Candle 1 (Left) -->
+                    <!-- Candle 1 -->
                     <rect x="73" y="16" width="6" height="20" rx="3" fill="url(#candleGrad1)" />
                     <line x1="76" y1="16" x2="76" y2="12" stroke="#4a2810" stroke-width="1.5" />
                     <g class="flame flame-1" id="flame1">
                       <path d="M76 12 C73 9, 73 5, 76 1 C79 5, 79 9, 76 12 Z" fill="url(#flameGrad)" />
                       <circle cx="76" cy="7" r="1.5" fill="#ffffff" />
                     </g>
-                    <!-- Smoke 1 -->
                     <path class="smoke-puff" d="M76 10 Q74 5 78 2 Q72 -3 75 -8" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-linecap="round"/>
 
-                    <!-- Candle 2 (Center - Tallest) -->
+                    <!-- Candle 2 -->
                     <rect x="97" y="11" width="6.5" height="25" rx="3" fill="url(#candleGrad2)" />
                     <line x1="100.2" y1="11" x2="100.2" y2="7" stroke="#4a2810" stroke-width="1.5" />
                     <g class="flame flame-2" id="flame2">
                       <path d="M100.2 7 C97 4, 97 -1, 100.2 -5 C103.5 -1, 103.5 4, 100.2 7 Z" fill="url(#flameGrad)" />
                       <circle cx="100.2" cy="1" r="1.8" fill="#ffffff" />
                     </g>
-                    <!-- Smoke 2 -->
                     <path class="smoke-puff" d="M100 6 Q98 1 102 -3 Q97 -8 101 -14" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-linecap="round"/>
 
-                    <!-- Candle 3 (Right) -->
+                    <!-- Candle 3 -->
                     <rect x="121" y="16" width="6" height="20" rx="3" fill="url(#candleGrad1)" />
                     <line x1="124" y1="16" x2="124" y2="12" stroke="#4a2810" stroke-width="1.5" />
                     <g class="flame flame-3" id="flame3">
                       <path d="M124 12 C121 9, 121 5, 124 1 C127 5, 127 9, 124 12 Z" fill="url(#flameGrad)" />
                       <circle cx="124" cy="7" r="1.5" fill="#ffffff" />
                     </g>
-                    <!-- Smoke 3 -->
                     <path class="smoke-puff" d="M124 10 Q126 5 122 2 Q127 -3 125 -8" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-linecap="round"/>
 
-                    <!-- SVG Gradients -->
                     <defs>
                       <linearGradient id="candleGrad1" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stop-color="#f472b6" />
-                        <stop offset="100%" stop-color="#c084fc" />
+                        <stop offset="0%" stop-color="#6fffe9" />
+                        <stop offset="100%" stop-color="#c8b6ff" />
                       </linearGradient>
                       <linearGradient id="candleGrad2" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stop-color="#fbbf24" />
-                        <stop offset="100%" stop-color="#f43f5e" />
+                        <stop offset="0%" stop-color="#ffd166" />
+                        <stop offset="100%" stop-color="#ff758f" />
                       </linearGradient>
                       <linearGradient id="flameGrad" x1="0" y1="1" x2="0" y2="0">
                         <stop offset="0%" stop-color="#ea580c" />
-                        <stop offset="40%" stop-color="#f59e0b" />
+                        <stop offset="40%" stop-color="#fbbf24" />
                         <stop offset="100%" stop-color="#fef08a" />
                       </linearGradient>
                     </defs>
                   </svg>
                 </div>
 
-                <p id="wishInstructionText" class="wish-instruction">Click the button to blow the candles & make a wish!</p>
+                <p id="wishInstructionText" class="wish-instruction">Make a birthday wish and blow out the candles!</p>
 
                 <button id="btnBlowCandles" class="btn-blow-candles">
                   <span id="candleBtnIcon">🕯️</span>
@@ -1167,50 +1219,76 @@
               </div>
             </div>
 
-            <!-- Right Side: Polaroid Photo Frame with Tape Effect -->
-            <div class="polaroid-wrapper">
-              <div id="polaroidCard" class="polaroid-card">
-                <!-- Cute Washi Tape Sticker -->
-                <div class="washi-tape"></div>
-
-                <!-- Photo Container (Drag & Drop or Click) -->
-                <div id="polaroidDropZone" class="polaroid-photo-box" title="Drag & drop a photo of Akshita or click to change">
-                  <!-- Default Aesthetic Portrait / Celebration Image -->
-                  <img id="polaroidImg" class="polaroid-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'><defs><radialGradient id='g' cx='50%25' cy='40%25' r='60%25'><stop offset='0%25' stop-color='%23ffd1b3'/><stop offset='45%25' stop-color='%23e09f87'/><stop offset='85%25' stop-color='%23381e4b'/><stop offset='100%25' stop-color='%23190b2b'/></radialGradient></defs><rect width='100%25' height='100%25' fill='url(%23g)'/><g fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='0.4'><circle cx='200' cy='180' r='90'/><circle cx='200' cy='180' r='120' stroke-dasharray='4 8'/></g><text x='200' y='165' text-anchor='middle' font-family='serif' font-size='68' fill='%23ffffff' font-weight='bold' opacity='0.95'>A</text><text x='200' y='210' text-anchor='middle' font-family='sans-serif' font-size='16' fill='%23fef08a' letter-spacing='3' font-weight='600'>AKSHITA</text><text x='200' y='235' text-anchor='middle' font-family='sans-serif' font-size='13' fill='%23fbcfe8' letter-spacing='1'>✦ Birthday Queen ✦</text><g fill='%23fde047' opacity='0.8'><path d='M80 90 L83 100 L93 103 L83 106 L80 116 L77 106 L67 103 L77 100 Z'/><path d='M320 120 L322 128 L330 130 L322 132 L320 140 L318 132 L310 130 L318 128 Z'/><path d='M300 290 L303 300 L313 303 L303 306 L300 316 L297 306 L287 303 L297 300 Z'/><path d='M100 280 L102 288 L110 290 L102 292 L100 300 L98 292 L90 290 L98 288 Z'/></g></svg>" alt="Birthday celebration for Akshita" />
-
-                  <!-- Hover overlay prompt -->
-                  <div class="photo-overlay-prompt">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                      <polyline points="17 8 12 3 7 8"/>
-                      <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                    <span>Click or Drop Akshita's Photo</span>
-                  </div>
+            <!-- Right Side: Cute Interactive Friendship Playground (Zero Photos) -->
+            <div class="bestie-zone">
+              <!-- Bestie Hype Note Dispenser -->
+              <div class="hype-jar-card">
+                <div class="hype-jar-header">
+                  <span class="hype-jar-title">Bestie Hype Jar ✨</span>
+                  <span id="hypeCounter" class="hype-counter">Note 1 / 8</span>
                 </div>
 
-                <!-- Handwritten Style Caption (Editable) -->
-                <div id="polaroidCaption" class="polaroid-caption" contenteditable="true" spellcheck="false" title="Click to edit caption">
-                  Akshita's Golden Glow 🌸
+                <div id="cuteNoteSlip" class="cute-note-slip" role="button" tabindex="0" title="Click for another bestie note!">
+                  <div id="noteEmoji" class="note-emoji">🌟</div>
+                  <div id="noteText" class="note-text">Certified 10/10 Friend & Chaos Partner!</div>
+                  <div id="noteSub" class="note-sub">Tap the note or button below for more</div>
+                </div>
+
+                <div class="hype-actions">
+                  <button id="btnNextNote" class="btn-next-note">
+                    <span>Pull Another Note</span>
+                    <span aria-hidden="true">🎲</span>
+                  </button>
+
+                  <button id="btnHighFive" class="btn-high-five" title="Send Akshita a birthday high-five!">
+                    <span aria-hidden="true">🙌</span>
+                    <span>High-Five: <span id="highFiveCount">0</span></span>
+                  </button>
                 </div>
               </div>
 
-              <!-- Photo Controls -->
-              <div class="polaroid-actions">
-                <button id="btnUploadPhoto" class="btn-photo-action" title="Browse and upload a photo">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                    <circle cx="9" cy="9" r="2"/>
-                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                  </svg>
-                  <span>Upload Photo</span>
-                </button>
-                <button id="btnResetPhoto" class="btn-photo-action" title="Reset to default birthday design">
-                  <span>Reset</span>
-                </button>
-              </div>
+              <!-- Interactive Friendship Birthday Vouchers -->
+              <div class="vouchers-card">
+                <div class="vouchers-header">
+                  <span class="vouchers-title">Birthday Bestie Vouchers 🎟️</span>
+                  <span class="vouchers-hint">Click to claim</span>
+                </div>
 
-              <input type="file" id="photoFileInput" accept="image/*" />
+                <div class="voucher-list">
+                  <button class="voucher-btn" data-voucher="coffee">
+                    <span class="voucher-left">
+                      <span class="voucher-icon">🧋</span>
+                      <span class="voucher-info">
+                        <span class="voucher-name">Treat / Coffee Run On Me</span>
+                        <span class="voucher-desc">Valid for your favorite drink or snack</span>
+                      </span>
+                    </span>
+                    <span class="voucher-status">Claim</span>
+                  </button>
+
+                  <button class="voucher-btn" data-voucher="hangout">
+                    <span class="voucher-left">
+                      <span class="voucher-icon">🎬</span>
+                      <span class="voucher-info">
+                        <span class="voucher-name">Ultimate Hangout Pick</span>
+                        <span class="voucher-desc">You pick the movie, food, & playlist</span>
+                      </span>
+                    </span>
+                    <span class="voucher-status">Claim</span>
+                  </button>
+
+                  <button class="voucher-btn" data-voucher="hype">
+                    <span class="voucher-left">
+                      <span class="voucher-icon">📣</span>
+                      <span class="voucher-info">
+                        <span class="voucher-name">Unlimited Hype Squad</span>
+                        <span class="voucher-desc">24/7 cheering for all your goals</span>
+                      </span>
+                    </span>
+                    <span class="voucher-status">Claim</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1219,20 +1297,43 @@
     </div>
   </main>
 
+  <!-- Floating Stickers (Interactive Pop-outs) -->
+  <div class="floating-stickers-container" aria-label="Interactive birthday stickers">
+    <button id="stickerBalloon" class="floating-sticker sticker-1" title="Click for a fun wish!">
+      <span class="sticker-badge">🎈</span>
+      <span class="sticker-label">Good Vibes</span>
+    </button>
+
+    <button id="stickerGift" class="floating-sticker sticker-2" title="Unwrap a friendship blessing!">
+      <span class="sticker-badge">🎁</span>
+      <span class="sticker-label">Surprise</span>
+    </button>
+
+    <button id="stickerStar" class="floating-sticker sticker-3" title="Starlight wish for Akshita!">
+      <span class="sticker-badge">⭐</span>
+      <span class="sticker-label">Superstar</span>
+    </button>
+
+    <button id="stickerMusic" class="floating-sticker sticker-4" title="Party playlist energy!">
+      <span class="sticker-badge">🎶</span>
+      <span class="sticker-label">Jam Out</span>
+    </button>
+  </div>
+
   <!-- ==============================================
-       STICKER POPUP MODAL (WISHES & NOTES)
+       STICKER POPUP MODAL (FRIENDSHIP WISHES)
        ============================================== -->
   <div id="stickerModal" class="sticker-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="sticker-modal-card">
       <div id="modalIcon" class="modal-icon-badge">✨</div>
       <h3 id="modalTitle" class="modal-title">Special Wish</h3>
-      <p id="modalBody" class="modal-body-text">A little sparkle for your special day!</p>
-      <button id="btnModalClose" class="btn-modal-close">Close with Love ♡</button>
+      <p id="modalBody" class="modal-body-text">A little sparkle for your birthday!</p>
+      <button id="btnModalClose" class="btn-modal-close">Yay, Thanks Bestie! 🎉</button>
     </div>
   </div>
 
   <!-- ==============================================
-       INTERACTIVE JAVASCRIPT (AUDIO, 3D, CANVAS, & LOGIC)
+       INTERACTIVE JAVASCRIPT (AUDIO, CANVAS, & LOGIC)
        ============================================== -->
   <script>
     /* ==========================================================
@@ -1257,47 +1358,41 @@
         }
       }
 
-      // Gentle chime / sparkle effect
       playChimeChord() {
         this.init();
         if (!this.ctx) return;
-        const freqs = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+        const freqs = [523.25, 659.25, 783.99, 1046.50, 1318.51];
         freqs.forEach((freq, idx) => {
           setTimeout(() => {
-            this.playBellTone(freq, 1.2, 0.12);
-          }, idx * 75);
+            this.playBellTone(freq, 1.1, 0.12);
+          }, idx * 70);
         });
       }
 
-      // Envelope opening sound (swoosh + harp roll)
       playOpenEnvelopeSound() {
         this.init();
         if (!this.ctx) return;
-        // Whoosh sweep
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         const now = this.ctx.currentTime;
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(160, now);
-        osc.frequency.exponentialRampToValueAtTime(780, now + 0.35);
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.exponentialRampToValueAtTime(820, now + 0.32);
         gain.gain.setValueAtTime(0.01, now);
-        gain.gain.linearRampToValueAtTime(0.2, now + 0.15);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+        gain.gain.linearRampToValueAtTime(0.18, now + 0.14);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start(now);
-        osc.stop(now + 0.5);
+        osc.stop(now + 0.45);
 
-        // Chimes trailing
-        setTimeout(() => this.playChimeChord(), 200);
+        setTimeout(() => this.playChimeChord(), 180);
       }
 
-      // Candle blow sound (air breath + celebration bell)
       playCandleBlowSound() {
         this.init();
         if (!this.ctx) return;
-        // White noise breath / puff
-        const bufferSize = this.ctx.sampleRate * 0.4;
+        const bufferSize = this.ctx.sampleRate * 0.38;
         const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
         const data = buffer.getChannelData(0);
         for (let i = 0; i < bufferSize; i++) {
@@ -1309,29 +1404,27 @@
 
         const filter = this.ctx.createBiquadFilter();
         filter.type = 'bandpass';
-        filter.frequency.value = 800;
+        filter.frequency.value = 820;
         filter.Q.value = 1.2;
 
         const gain = this.ctx.createGain();
         const now = this.ctx.currentTime;
-        gain.gain.setValueAtTime(0.3, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+        gain.gain.setValueAtTime(0.28, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
 
         noise.connect(filter);
         filter.connect(gain);
         gain.connect(this.ctx.destination);
         noise.start(now);
 
-        // Celestial celebration chimes
         setTimeout(() => {
-          [587.33, 739.99, 880.00, 1174.66].forEach((f, i) => { // D5, F#5, A5, D6
-            setTimeout(() => this.playBellTone(f, 1.5, 0.15), i * 90);
+          [587.33, 739.99, 880.00, 1174.66].forEach((f, i) => {
+            setTimeout(() => this.playBellTone(f, 1.3, 0.14), i * 85);
           });
-        }, 220);
+        }, 200);
       }
 
-      // Single marimba/celeste bell note
-      playBellTone(frequency, duration = 1.0, volume = 0.15) {
+      playBellTone(frequency, duration = 0.9, volume = 0.14) {
         if (!this.ctx) return;
         const now = this.ctx.currentTime;
         const osc = this.ctx.createOscillator();
@@ -1358,7 +1451,6 @@
         osc2.stop(now + duration);
       }
 
-      // Pop sound for stickers
       playStickerPopSound() {
         this.init();
         if (!this.ctx) return;
@@ -1366,17 +1458,23 @@
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(440, now);
-        osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        osc.frequency.setValueAtTime(480, now);
+        osc.frequency.exponentialRampToValueAtTime(920, now + 0.11);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
         osc.start(now);
-        osc.stop(now + 0.16);
+        osc.stop(now + 0.15);
       }
 
-      // Synthesizes "Happy Birthday to You" melody with music box timbre
+      playHighFiveSound() {
+        this.init();
+        if (!this.ctx) return;
+        this.playBellTone(659.25, 0.25, 0.14);
+        setTimeout(() => this.playBellTone(987.77, 0.45, 0.16), 70);
+      }
+
       toggleBirthdayMelody(onStateChange) {
         this.init();
         if (this.isPlayingSong) {
@@ -1394,11 +1492,6 @@
       playSongLoop() {
         if (!this.isPlayingSong) return;
 
-        // Notes for Happy Birthday in G Major:
-        // D4, D4, E4, D4, G4, F#4
-        // D4, D4, E4, D4, A4, G4
-        // D4, D4, D5, B4, G4, F#4, E4
-        // C5, C5, B4, G4, A4, G4
         const melody = [
           { f: 293.66, d: 280 }, { f: 293.66, d: 200 }, { f: 329.63, d: 450 }, { f: 293.66, d: 450 }, { f: 392.00, d: 450 }, { f: 369.99, d: 900 },
           { f: 293.66, d: 280 }, { f: 293.66, d: 200 }, { f: 329.63, d: 450 }, { f: 293.66, d: 450 }, { f: 440.00, d: 450 }, { f: 392.00, d: 900 },
@@ -1410,13 +1503,12 @@
         melody.forEach((note) => {
           this.songTimeout = setTimeout(() => {
             if (this.isPlayingSong) {
-              this.playBellTone(note.f, 0.9, 0.16);
+              this.playBellTone(note.f, 0.9, 0.15);
             }
           }, delayAccumulator);
           delayAccumulator += note.d;
         });
 
-        // Loop after song finishes + short pause
         this.songTimeout = setTimeout(() => {
           if (this.isPlayingSong) {
             this.playSongLoop();
@@ -1441,74 +1533,63 @@
     function fireGrandConfetti() {
       if (typeof confetti !== 'function') return;
 
-      const duration = 2.4 * 1000;
+      const duration = 2.2 * 1000;
       const animationEnd = Date.now() + duration;
-      const colors = ['#f472b6', '#c084fc', '#fbbf24', '#fbcfe8', '#38bdf8', '#fed7aa'];
+      const colors = ['#ffd166', '#ff8fa3', '#6fffe9', '#c8b6ff', '#ffffff'];
 
-      // Center initial pop
       confetti({
-        particleCount: 80,
+        particleCount: 85,
         spread: 100,
         origin: { y: 0.6 },
         colors: colors,
         disableForReducedMotion: true
       });
 
-      // Side fireworks cannons
       const interval = setInterval(function() {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) {
           return clearInterval(interval);
         }
-        const particleCount = 40 * (timeLeft / duration);
+        const particleCount = 36 * (timeLeft / duration);
 
         confetti({
           particleCount,
           angle: 60,
           spread: 65,
           origin: { x: 0, y: 0.7 },
-          colors: colors
+          colors: colors,
+          disableForReducedMotion: true
         });
         confetti({
           particleCount,
           angle: 120,
           spread: 65,
           origin: { x: 1, y: 0.7 },
-          colors: colors
+          colors: colors,
+          disableForReducedMotion: true
         });
       }, 250);
     }
 
-    function fireCandleConfetti() {
+    function fireMiniConfetti(colors = ['#ffd166', '#6fffe9', '#ff8fa3']) {
       if (typeof confetti !== 'function') return;
       confetti({
-        particleCount: 50,
-        spread: 70,
-        origin: { y: 0.7 },
-        colors: ['#fbbf24', '#f59e0b', '#f472b6', '#fed7aa'],
-        shapes: ['star', 'circle'],
-        scalar: 1.2
-      });
-    }
-
-    function fireStickerConfetti() {
-      if (typeof confetti !== 'function') return;
-      confetti({
-        particleCount: 35,
-        spread: 60,
-        origin: { y: 0.5 },
-        colors: ['#c084fc', '#f472b6', '#fbbf24'],
-        scalar: 0.9
+        particleCount: 40,
+        spread: 65,
+        origin: { y: 0.65 },
+        colors: colors,
+        scalar: 0.95,
+        disableForReducedMotion: true
       });
     }
 
     /* ==========================================================
-       3. AMBIENT CANVAS BACKGROUND (STARS & FLOATING SPARKLES)
+       3. AMBIENT CANVAS BACKGROUND (CUTE TWINKLING STARS)
        ========================================================== */
     const canvas = document.getElementById('ambientCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
-    const particleCount = 65;
+    const particleCount = 60;
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -1522,18 +1603,17 @@
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 1.8 + 0.5;
-        this.alpha = Math.random() * 0.7 + 0.2;
-        this.speedX = (Math.random() - 0.5) * 0.4;
-        this.speedY = -Math.random() * 0.5 - 0.2;
-        this.pulse = Math.random() * 0.03 + 0.01;
+        this.radius = Math.random() * 1.9 + 0.6;
+        this.alpha = Math.random() * 0.65 + 0.2;
+        this.speedX = (Math.random() - 0.5) * 0.35;
+        this.speedY = -Math.random() * 0.45 - 0.15;
+        this.pulse = Math.random() * 0.025 + 0.01;
         this.pulseDirection = 1;
-        // Golden, lavender, rose, or starlight white
         const colors = [
-          'rgba(251, 191, 36, ',
-          'rgba(244, 114, 182, ',
-          'rgba(192, 132, 252, ',
-          'rgba(255, 255, 255, '
+          'rgba(255, 209, 102, ',
+          'rgba(111, 255, 233, ',
+          'rgba(255, 143, 163, ',
+          'rgba(200, 182, 255, '
         ];
         this.baseColor = colors[Math.floor(Math.random() * colors.length)];
       }
@@ -1542,7 +1622,7 @@
         this.y += this.speedY;
 
         this.alpha += this.pulse * this.pulseDirection;
-        if (this.alpha > 0.9) this.pulseDirection = -1;
+        if (this.alpha > 0.88) this.pulseDirection = -1;
         if (this.alpha < 0.15) this.pulseDirection = 1;
 
         if (this.y < -10 || this.x < -10 || this.x > canvas.width + 10) {
@@ -1571,17 +1651,14 @@
 
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let p of particles) {
+      for (const p of particles) {
         p.update();
         p.draw();
       }
       requestAnimationFrame(animateParticles);
     }
 
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-    });
-
+    window.addEventListener('resize', resizeCanvas);
     initParticles();
     animateParticles();
 
@@ -1595,22 +1672,19 @@
     const btnReopenCard = document.getElementById('btnReopenCard');
 
     function openCard() {
-      // 1. Trigger flap opening animation in CSS 3D
       envelopeCard.classList.add('opening');
       audio.playOpenEnvelopeSound();
 
-      // 2. Confetti explosion
       setTimeout(() => {
         fireGrandConfetti();
-      }, 350);
+      }, 320);
 
-      // 3. Smooth transition to inner greeting card
       setTimeout(() => {
         envelopeScreen.classList.add('hidden');
         innerCardScreen.classList.add('visible');
         innerCardScreen.setAttribute('aria-hidden', 'false');
         btnReopenCard.style.display = 'inline-flex';
-      }, 750);
+      }, 700);
     }
 
     function closeCardBackToEnvelope() {
@@ -1621,14 +1695,13 @@
       setTimeout(() => {
         envelopeScreen.classList.remove('hidden');
         envelopeCard.classList.remove('opening');
-      }, 250);
+      }, 220);
     }
 
     envelopeCard.addEventListener('click', openCard);
     btnOpenCard.addEventListener('click', openCard);
     btnReopenCard.addEventListener('click', closeCardBackToEnvelope);
 
-    // Keyboard accessibility for opening
     envelopeCard.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -1638,7 +1711,7 @@
 
     /* ==========================================================
        5. INTERACTIVE CAKE CANDLES & WISH LOGIC
-       ========================================================= */
+       ========================================================== */
     const cakeWrapper = document.getElementById('cakeWrapper');
     const btnBlowCandles = document.getElementById('btnBlowCandles');
     const candleBtnText = document.getElementById('candleBtnText');
@@ -1648,110 +1721,171 @@
 
     function handleCandlesInteraction() {
       if (!candlesAreBlown) {
-        // Blow candles
         candlesAreBlown = true;
         cakeWrapper.classList.add('candles-blown');
         audio.playCandleBlowSound();
-        fireCandleConfetti();
+        fireMiniConfetti(['#ffd166', '#ff8fa3', '#6fffe9']);
 
-        wishInstructionText.innerHTML = "✨ <strong>Wish granted!</strong> May every dream of yours bloom into reality, Akshita! 🌸";
-        wishInstructionText.style.color = "var(--accent-gold)";
-        candleBtnText.textContent = "Light Candles Again";
-        candleBtnIcon.textContent = "🕯️";
+        wishInstructionText.innerHTML = '🎉 <strong>Wish sent to the stars!</strong> Happy Birthday, Akshita!';
+        wishInstructionText.style.color = 'var(--accent-sunny)';
+        candleBtnText.textContent = 'Relight the Candles';
+        candleBtnIcon.textContent = '🕯️';
       } else {
-        // Re-light candles
         candlesAreBlown = false;
         cakeWrapper.classList.remove('candles-blown');
         audio.playStickerPopSound();
 
-        wishInstructionText.textContent = "Click the button to blow the candles & make a wish!";
-        wishInstructionText.style.color = "var(--text-soft)";
-        candleBtnText.textContent = "Blow the Candles";
-        candleBtnIcon.textContent = "✨";
+        wishInstructionText.textContent = 'Make a birthday wish and blow out the candles!';
+        wishInstructionText.style.color = 'var(--text-soft)';
+        candleBtnText.textContent = 'Blow the Candles';
+        candleBtnIcon.textContent = '✨';
       }
     }
 
     btnBlowCandles.addEventListener('click', handleCandlesInteraction);
     cakeWrapper.addEventListener('click', handleCandlesInteraction);
+    cakeWrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleCandlesInteraction();
+      }
+    });
 
     /* ==========================================================
-       6. POLAROID PHOTO UPLOAD & DRAG-AND-DROP
+       6. BESTIE HYPE JAR (INTERACTIVE FRIENDSHIP NOTES)
        ========================================================== */
-    const polaroidDropZone = document.getElementById('polaroidDropZone');
-    const photoFileInput = document.getElementById('photoFileInput');
-    const polaroidImg = document.getElementById('polaroidImg');
-    const btnUploadPhoto = document.getElementById('btnUploadPhoto');
-    const btnResetPhoto = document.getElementById('btnResetPhoto');
-    const defaultPhotoSrc = polaroidImg.src;
+    const bestieNotes = [
+      {
+        emoji: '🌟',
+        text: 'Certified 10/10 Friend & Chaos Partner!',
+        sub: 'Tap for another friendship note'
+      },
+      {
+        emoji: '😂',
+        text: 'Warning: Hangouts with you cause extreme ab workouts from laughing!',
+        sub: 'Best comedy duo energy'
+      },
+      {
+        emoji: '🧁',
+        text: 'Birthday Rule #1: You get the biggest slice of cake today!',
+        sub: 'Zero sharing required'
+      },
+      {
+        emoji: '📣',
+        text: 'Thanks for always hyping everyone up and giving the realest advice!',
+        sub: 'Official MVP of the friend group'
+      },
+      {
+        emoji: '🧋',
+        text: 'Always down for spontaneous snacks, coffee runs & dramatic storytimes!',
+        sub: 'Elite hangout partner'
+      },
+      {
+        emoji: '🚀',
+        text: 'This is your year to crush every goal & unlock main-character wins!',
+        sub: 'Your squad is cheering loudest'
+      },
+      {
+        emoji: '🎧',
+        text: '100% unmatched playlist taste & road-trip vibes!',
+        sub: 'Aux cord privileges forever'
+      },
+      {
+        emoji: '🫶',
+        text: 'Grateful for every memory we’ve made — and all the chaotic ones ahead!',
+        sub: 'Cheers, Akshita!'
+      }
+    ];
 
-    function loadLocalImage(file) {
-      if (!file || !file.type.startsWith('image/')) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        polaroidImg.src = e.target.result;
-        audio.playStickerPopSound();
-        fireStickerConfetti();
-      };
-      reader.readAsDataURL(file);
+    let currentNoteIndex = 0;
+    const cuteNoteSlip = document.getElementById('cuteNoteSlip');
+    const noteEmoji = document.getElementById('noteEmoji');
+    const noteText = document.getElementById('noteText');
+    const noteSub = document.getElementById('noteSub');
+    const hypeCounter = document.getElementById('hypeCounter');
+    const btnNextNote = document.getElementById('btnNextNote');
+
+    function showNextBestieNote() {
+      currentNoteIndex = (currentNoteIndex + 1) % bestieNotes.length;
+      const item = bestieNotes[currentNoteIndex];
+
+      noteEmoji.textContent = item.emoji;
+      noteText.textContent = item.text;
+      noteSub.textContent = item.sub;
+      hypeCounter.textContent = `Note ${currentNoteIndex + 1} / ${bestieNotes.length}`;
+
+      cuteNoteSlip.classList.remove('pop-anim');
+      void cuteNoteSlip.offsetWidth;
+      cuteNoteSlip.classList.add('pop-anim');
+
+      audio.playStickerPopSound();
     }
 
-    // Browse file trigger
-    btnUploadPhoto.addEventListener('click', () => photoFileInput.click());
-    polaroidDropZone.addEventListener('click', () => photoFileInput.click());
-
-    photoFileInput.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files[0]) {
-        loadLocalImage(e.target.files[0]);
+    btnNextNote.addEventListener('click', showNextBestieNote);
+    cuteNoteSlip.addEventListener('click', showNextBestieNote);
+    cuteNoteSlip.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        showNextBestieNote();
       }
-    });
-
-    // Drag and Drop functionality
-    polaroidDropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      polaroidDropZone.classList.add('drag-over');
-    });
-
-    polaroidDropZone.addEventListener('dragleave', () => {
-      polaroidDropZone.classList.remove('drag-over');
-    });
-
-    polaroidDropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      polaroidDropZone.classList.remove('drag-over');
-      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-        loadLocalImage(e.dataTransfer.files[0]);
-      }
-    });
-
-    // Reset photo
-    btnResetPhoto.addEventListener('click', () => {
-      polaroidImg.src = defaultPhotoSrc;
-      audio.playStickerPopSound();
     });
 
     /* ==========================================================
-       7. FLOATING WISH STICKERS (CUSTOM POP-OUT NOTES)
+       7. HIGH-FIVE COUNTER & BIRTHDAY VOUCHERS
+       ========================================================== */
+    const btnHighFive = document.getElementById('btnHighFive');
+    const highFiveCountEl = document.getElementById('highFiveCount');
+    let highFiveCount = 0;
+
+    btnHighFive.addEventListener('click', () => {
+      highFiveCount += 1;
+      highFiveCountEl.textContent = highFiveCount;
+      audio.playHighFiveSound();
+
+      if (highFiveCount % 5 === 0) {
+        fireMiniConfetti(['#ffd166', '#6fffe9', '#ff8fa3']);
+      }
+    });
+
+    const voucherButtons = document.querySelectorAll('.voucher-btn');
+    voucherButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const isClaimed = btn.classList.toggle('claimed');
+        const statusEl = btn.querySelector('.voucher-status');
+        if (isClaimed) {
+          statusEl.textContent = 'Claimed ✓';
+          audio.playHighFiveSound();
+          fireMiniConfetti(['#6fffe9', '#ffd166']);
+        } else {
+          statusEl.textContent = 'Claim';
+          audio.playStickerPopSound();
+        }
+      });
+    });
+
+    /* ==========================================================
+       8. FLOATING WISH STICKERS (FRIENDSHIP NOTES)
        ========================================================== */
     const stickerData = {
       balloon: {
         icon: '🎈',
-        title: 'Boundless Joy & Freedom',
-        text: '“Dearest Akshita, like this balloon floating high, may your spirits always soar above the clouds! Never let anything hold back your wonderful wanderlust and ambition.”'
+        title: 'Good Vibes Only!',
+        text: '“Hey Akshita! Just like this balloon, may your mood stay sky-high all year long — packed with fun trips, cool surprises, and zero Monday blues!”'
       },
       gift: {
         icon: '🎁',
-        title: 'Unwrapped Blessings',
-        text: '“A box packed with 365 days of unexpected smiles, heartwarming friendships, spontaneous adventures, and milestone victories just for you!”'
+        title: 'Friend Group Blessing',
+        text: '“Consider this a virtual box stuffed with 365 days of good luck, great food, hilarious group-chat moments, and everything you’ve been wishing for!”'
       },
       star: {
         icon: '⭐',
-        title: 'Keep Shining, Queen',
-        text: '“Your kind heart, genuine empathy, and brilliant mind illuminate every room you walk into. Never forget how truly special and loved you are, Akshita!”'
+        title: 'Total Superstar!',
+        text: '“Your humor, warmth, and positive energy make every hangout ten times better. Never forget how awesome you are as a friend, Akshita!”'
       },
       music: {
         icon: '🎶',
-        title: 'Life’s Sweet Melody',
-        text: '“May your coming year be filled with upbeat rhythms, midnight dance parties, heartfelt tunes, and moments that make your soul sing with joy!”'
+        title: 'Cue the Birthday Playlist!',
+        text: '“May your next year feel like your favorite song on repeat — full of good energy, late-night laughs, and memories worth replaying!”'
       }
     };
 
@@ -1773,7 +1907,7 @@
       stickerModal.setAttribute('aria-hidden', 'false');
 
       audio.playStickerPopSound();
-      fireStickerConfetti();
+      fireMiniConfetti();
     }
 
     function closeStickerModal() {
@@ -1801,7 +1935,7 @@
     });
 
     /* ==========================================================
-       8. BIRTHDAY MELODY MUSIC TOGGLE
+       9. BIRTHDAY MELODY MUSIC TOGGLE
        ========================================================== */
     const btnMusicToggle = document.getElementById('btnMusicToggle');
     const musicBtnLabel = document.getElementById('musicBtnLabel');
@@ -1810,10 +1944,10 @@
       audio.toggleBirthdayMelody((isPlaying) => {
         if (isPlaying) {
           btnMusicToggle.classList.add('playing');
-          musicBtnLabel.textContent = "Melody Playing 🎶";
+          musicBtnLabel.textContent = 'Melody Playing 🎶';
         } else {
           btnMusicToggle.classList.remove('playing');
-          musicBtnLabel.textContent = "Birthday Melody";
+          musicBtnLabel.textContent = 'Birthday Melody';
         }
       });
     });
